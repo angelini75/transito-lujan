@@ -1,0 +1,279 @@
+# ══════════════════════════════════════════════════════════
+# CONOCIMIENTO LOCAL — Luján, Buenos Aires
+# Completar por el residente-conductor antes de activar n8n
+# ══════════════════════════════════════════════════════════
+#
+# INSTRUCCIONES:
+# - Sé específico en intersecciones: "San Martín y Humberto I", no "el centro"
+# - Para lat/lon: si no las sabés, poné null y yo las geocodifico
+# - Para horarios: usá formato "07:30-08:30" o "tarde" si es aproximado
+# - Los campos "descripcion" pueden ser texto libre narrativo
+# ══════════════════════════════════════════════════════════
+
+# ──────────────────────────────────────────
+# SECCIÓN 1: VECTORES OD (validar coordenadas)
+# ──────────────────────────────────────────
+vectores_od:
+
+  # ─── TIPOLOGÍA A: Embudos físicos (puentes) ───
+  - id: v_pte_muniz
+    nombre: "Puente Dr. Muñiz"
+    tipologia: A
+    origen_desc: "[COMPLETAR: punto exacto antes del puente, desde el norte]"
+    origen_lat: null
+    origen_lon: null
+    destino_desc: "[COMPLETAR: punto exacto después del puente, en el sur]"
+    destino_lat: null
+    destino_lon: null
+    horario_critico: "[COMPLETAR: ej. 07:30-08:30 y 17:00-19:00]"
+    notas: "[COMPLETAR: qué pasa específicamente — colapso, moto por vereda, etc.]"
+    incluir: true
+
+  - id: v_pte_brown
+    nombre: "Puente Almirante Brown"
+    tipologia: A
+    origen_desc: "[COMPLETAR]"
+    origen_lat: null
+    origen_lon: null
+    destino_desc: "[COMPLETAR]"
+    destino_lat: null
+    destino_lon: null
+    horario_critico: null
+    notas: null
+    incluir: true
+
+  - id: v_pte_heras
+    nombre: "Puente Las Heras"
+    tipologia: A
+    origen_desc: "[COMPLETAR]"
+    origen_lat: null
+    origen_lon: null
+    destino_desc: "[COMPLETAR]"
+    destino_lat: null
+    destino_lon: null
+    horario_critico: null
+    notas: null
+    incluir: true
+
+  # ─── TIPOLOGÍA B: Barreras ferroviarias (FC Sarmiento) ───
+  - id: v_fc_casey
+    nombre: "Paso a nivel Lorenzo Casey"
+    tipologia: B
+    origen_desc: "[COMPLETAR]"
+    origen_lat: null
+    origen_lon: null
+    destino_desc: "[COMPLETAR]"
+    destino_lat: null
+    destino_lon: null
+    horario_critico: null
+    notas: "[COMPLETAR: frecuencia de bajada de barrera, comportamiento de conductores]"
+    incluir: true
+
+  - id: v_fc_mitre
+    nombre: "Paso a nivel Bmé. Mitre / Av. España"
+    tipologia: B
+    origen_desc: "[COMPLETAR]"
+    origen_lat: null
+    origen_lon: null
+    destino_desc: "[COMPLETAR]"
+    destino_lat: null
+    destino_lon: null
+    horario_critico: null
+    notas: null
+    incluir: true
+
+  # ─── TIPOLOGÍA C: Corredores troncales ───
+  - id: v_humberto_01
+    nombre: "Humberto I — tramo norte"
+    tipologia: C
+    origen_desc: "[COMPLETAR: desde qué altura]"
+    destino_desc: "[COMPLETAR: hasta qué altura]"
+    origen_lat: null
+    origen_lon: null
+    destino_lat: null
+    destino_lon: null
+    horario_critico: null
+    notas: null
+    incluir: true
+
+  - id: v_humberto_02
+    nombre: "Humberto I — tramo sur"
+    tipologia: C
+    origen_desc: "[COMPLETAR]"
+    destino_desc: "[COMPLETAR]"
+    origen_lat: null
+    origen_lon: null
+    destino_lat: null
+    destino_lon: null
+    horario_critico: null
+    notas: null
+    incluir: true
+
+  - id: v_basilical
+    nombre: "Av. Nuestra Señora de Luján (eje basilical)"
+    tipologia: C
+    origen_desc: "[COMPLETAR: acceso desde Ruta 7]"
+    destino_desc: "[COMPLETAR: frente a la Basílica]"
+    origen_lat: null
+    origen_lon: null
+    destino_lat: null
+    destino_lon: null
+    horario_critico: "sábados y domingos 11:00-18:00"
+    notas: "[COMPLETAR: comportamiento en días de peregrinación vs normal]"
+    incluir: true
+
+  - id: v_sanmartin
+    nombre: "San Martín / Constitución"
+    tipologia: C
+    origen_desc: "[COMPLETAR]"
+    destino_desc: "[COMPLETAR]"
+    origen_lat: null
+    origen_lon: null
+    destino_lat: null
+    destino_lon: null
+    horario_critico: null
+    notas: null
+    incluir: true
+
+  - id: v_av_españa
+    nombre: "Av. España — tramo urbano"
+    tipologia: C
+    origen_desc: "[COMPLETAR]"
+    destino_desc: "[COMPLETAR]"
+    origen_lat: null
+    origen_lon: null
+    destino_lat: null
+    destino_lon: null
+    horario_critico: null
+    notas: null
+    incluir: true
+
+  # ─── Vectores adicionales (agregar los que conozcas) ───
+  # - id: v_custom_001
+  #   nombre: "[DESCRIBIR: qué tramo y por qué es relevante]"
+  #   tipologia: C
+  #   ...
+
+
+# ──────────────────────────────────────────
+# SECCIÓN 2: LOMAS DE BURRO Y REDUCTORES
+# ──────────────────────────────────────────
+lomas_de_burro:
+  # Completar con todos los que conocés
+  # Si no sabés las coordenadas exactas, la calle y altura son suficientes
+
+  - id: lb_001
+    calle: "[COMPLETAR]"
+    altura_o_entre: "[COMPLETAR: 'a 50m de la esquina con X' o 'entre A y B']"
+    lat: null
+    lon: null
+    tipo: "[reductor de velocidad / loma de burro / paso elevado peatonal]"
+    contexto: "[frente a escuela / hospital / semáforo / zona residencial]"
+    efecto_trafico: "[descripción libre de cómo afecta el flujo]"
+
+  # - id: lb_002
+  # ...
+
+
+# ──────────────────────────────────────────
+# SECCIÓN 3: CONFLICTOS CONOCIDOS
+# ──────────────────────────────────────────
+conflictos_conocidos:
+  # Intersecciones o tramos con problemas crónicos
+
+  - id: cf_001
+    interseccion: "[COMPLETAR: ej. 'San Martín y Humberto I']"
+    tipo: "[semaforo_mal_calibrado / visibilidad_reducida / giro_conflictivo / paso_no_señalizado / otro]"
+    descripcion: >
+      [COMPLETAR: descripción narrativa de qué pasa exactamente.
+      Incluir: tipo de vehículos involucrados, comportamiento observado,
+      condiciones que lo agravan (lluvia, noche, hora pico)]
+    horario_critico: "[COMPLETAR o null si es permanente]"
+    dias: ["[COMPLETAR: lunes-viernes / fines de semana / todos]"]
+    nivel_riesgo_estimado: "[alto / medio / bajo]"
+    tipo_accidente_probable: "[moto-auto / auto-auto / atropello / otro]"
+
+  # - id: cf_002
+  # ...
+
+
+# ──────────────────────────────────────────
+# SECCIÓN 4: ANOMALÍAS DE CALENDARIO
+# ──────────────────────────────────────────
+anomalias_calendario:
+  # Eventos que alteran el patrón normal de tránsito
+
+  - evento: "Peregrinación a la Basílica"
+    frecuencia: "[COMPLETAR: fechas aproximadas conocidas]"
+    impacto: >
+      [COMPLETAR: qué calles se cierran, cómo se redistribuye el tráfico,
+      desde qué hora es crítico]
+    vectores_afectados: ["[COMPLETAR: ids de vectores que se ven afectados]"]
+    marcar_como_outlier: true
+
+  - evento: "Inicio de clases / ciclo lectivo"
+    frecuencia: "marzo / agosto"
+    impacto: "[COMPLETAR]"
+    vectores_afectados: []
+    marcar_como_outlier: false
+
+  - evento: "[COMPLETAR: otros eventos locales que conozcas]"
+    frecuencia: null
+    impacto: null
+    vectores_afectados: []
+    marcar_como_outlier: false
+
+
+# ──────────────────────────────────────────
+# SECCIÓN 5: PUNTOS DE VISIBILIDAD REDUCIDA
+# ──────────────────────────────────────────
+puntos_ciegos_visibilidad:
+  # Lugares donde edificios, árboles, camiones estacionados
+  # o diseño vial tapan la visión en esquinas o cruces
+
+  - id: pv_001
+    interseccion: "[COMPLETAR]"
+    causa: "[árbol / edificio en esquina / camión estacionado permanente / otro]"
+    descripcion: "[descripción libre]"
+    riesgo_moto_auto: "[alto / medio / bajo]"
+
+
+# ──────────────────────────────────────────
+# SECCIÓN 6: CALLES SUBUTILIZADAS O ALTERNATIVAS
+# ──────────────────────────────────────────
+alternativas_desconocidas:
+  # Calles paralelas que podrían absorber tráfico pero los conductores no usan
+  # (porque están en mal estado, tienen muchas lomadas, son confusas, etc.)
+
+  - calle: "[COMPLETAR]"
+    razon_de_no_uso: "[estado / señalizacion / cultural / otra]"
+    potencial_como_alternativa: "[alto / medio / bajo]"
+    notas: "[descripción libre]"
+
+
+# ──────────────────────────────────────────
+# SECCIÓN 7: OBSERVACIONES GENERALES
+# ──────────────────────────────────────────
+observaciones_generales:
+  comportamiento_moto: >
+    [COMPLETAR: cómo se comportan las motos en general en Luján.
+    Circulan por la derecha, suben a la vereda, esquivan barreras,
+    zigzaguean entre filas, etc. Esto informa el modelo de riesgo.]
+
+  horarios_pico_reales: >
+    [COMPLETAR: según tu experiencia, cuáles son los horarios
+    donde el tránsito es realmente crítico. Pueden diferir de los
+    horarios "típicos" de otras ciudades.]
+
+  impacto_lluvia: >
+    [COMPLETAR: cómo cambia el tránsito cuando llueve.
+    ¿Hay inundaciones en algún punto? ¿Calles que se vuelven intransitables?]
+
+  cambios_recientes_sentido: >
+    [COMPLETAR: cambios de sentido de circulación que se hayan
+    hecho en los últimos 2-3 años. Especialmente los que generaron
+    controversia o problemas.]
+
+  otras_observaciones: >
+    [Cualquier otra cosa que consideres relevante para entender
+    el tránsito de Luján que no entre en las categorías anteriores]
