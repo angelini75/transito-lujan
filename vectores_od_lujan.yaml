@@ -1,0 +1,521 @@
+# ══════════════════════════════════════════════════════════════
+# VECTORES ORIGEN-DESTINO — Luján, Buenos Aires
+# Coordenadas: extraídas de OpenStreetMap via Overpass API (2026-04-19)
+# Validación pendiente: marcadas con validado_residente: false
+# Nombres OSM corregidos respecto a denominación local
+# ══════════════════════════════════════════════════════════════
+#
+# LÓGICA DE DISEÑO:
+# Cada vector mide el tiempo de viaje en un TRAMO ESPECÍFICO
+# colocando O y D en los extremos del embudo/corredor,
+# sin intersecciones mayores intermedias que ofrezcan
+# alternativas equivalentes (para evitar que Google reutee).
+#
+# NOMBRES OSM → DENOMINACIÓN LOCAL:
+#   "Avenida Humberto Primo"          = Humberto I
+#   "Doctor Francisco Javier Muñiz"   = Dr. Muñiz / Av. España (tramo urbano)
+#   "Intendente Pascual Simone"        = Pascual Simone
+#   "1000 - Avenida Carlos Pellegrini" = Carlos Pellegrini / Constitución
+#   "9 - Almirante Brown"             = Almirante Brown
+#   "16 - Adolfo Alsina"              = Adolfo Alsina
+#   "Avenida Fernández Beschtedt"     = Beschtedt
+# ══════════════════════════════════════════════════════════════
+
+vectores:
+
+  # ════════════════════════════════════════
+  # TIPOLOGÍA A — EMBUDOS FÍSICOS (PUENTES)
+  # ════════════════════════════════════════
+
+  - id: v_pte_brown
+    nombre: "Puente Almirante Brown"
+    tipologia: A
+    descripcion: >
+      Cruce del Río Luján por el Puente Almirante Brown. Cuello de botella
+      estructural. Se mide el tiempo de cruce completo incluyendo el acceso.
+    origen:
+      desc: "Almirante Brown, lado este del río (antes del puente)"
+      lat: -34.56050
+      lon: -59.12200
+      osm_ref: "Almirante Brown × Puente (acceso este)"
+    destino:
+      desc: "Almirante Brown, lado oeste — intersección con Av. NSra. de Luján"
+      lat: -34.56055
+      lon: -59.11992
+      osm_ref: "Almirante Brown × Av. Nuestra Señora de Luján (confirmado OSM)"
+    horario_critico: "07:30-08:30 y 17:00-19:00 días hábiles"
+    static_dist_m: 350
+    nota_local: "Puente sin semáforos pero acceso congestionado en picos"
+    validado_residente: false
+
+  - id: v_pte_gálvez
+    nombre: "Puente Gálvez (Las Heras)"
+    tipologia: A
+    descripcion: >
+      Extremo oeste de la calle Las Heras al cruzar el Río Luján.
+      Confirmar nombre local del puente con el residente.
+    origen:
+      desc: "Las Heras, lado este — intersección con Italia (único semáforo del tramo)"
+      lat: -34.56748
+      lon: -59.11757
+      osm_ref: "Italia × Las Heras — semáforo confirmado OSM"
+    destino:
+      desc: "Las Heras, extremo oeste (cruce del río)"
+      lat: null
+      lon: null
+      osm_ref: "PENDIENTE — confirmar con residente"
+    nota_local: >
+      El semáforo de Italia y Las Heras es el único punto de fricción antes
+      del cruce. Si el puente es bidireccional, medir ambos sentidos.
+    validado_residente: false
+
+  - id: v_pte_simone
+    nombre: "Pascual Simone — cruce Río + FFCC (doble barrera)"
+    tipologia: A
+    descripcion: >
+      El tramo más crítico del bypass norte-sur: cruza primero el Río Luján
+      y luego el paso a nivel del FC Sarmiento. Cuando la barrera baja,
+      el tráfico queda atrapado entre ambas barreras naturales.
+      MEDIR ESTE VECTOR ES PRIORITARIO: captura el peor escenario posible.
+    origen:
+      desc: "Pascual Simone × Ex Ruta Nacional 5 (semáforo muy lento)"
+      lat: -34.58739
+      lon: -59.11432
+      osm_ref: "Intendente Pascual Simone × Ex Ruta Nacional 5 (confirmado OSM)"
+    destino:
+      desc: "José M. Pérez × Av. Fray Manuel de Torres (salida del bypass)"
+      lat: -34.55803
+      lon: -59.12956
+      osm_ref: "Julio Argentino Roca × Fray Manuel de Torres (proxy — confirmar)"
+    paso_a_nivel: true
+    cruce_rio: true
+    horario_critico: "07:30-08:30 días hábiles (coincide con FC Sarmiento)"
+    nota_local: >
+      Medir en días hábiles pico mañana. Si el tren pasa durante el muestreo,
+      el friction_index se dispara a >3.0 — marcar esos registros con
+      flag 'barrera_activa' para análisis separado.
+    validado_residente: false
+
+
+  # ════════════════════════════════════════
+  # TIPOLOGÍA B — BARRERAS FERROVIARIAS
+  # ════════════════════════════════════════
+
+  - id: v_fc_casey
+    nombre: "Lorenzo Casey × FC Sarmiento (barrera)"
+    tipologia: B
+    descripcion: >
+      Paso a nivel del FC Sarmiento sobre Lorenzo Casey.
+      En pico mañana la barrera genera colas que llegan a varias cuadras.
+      Comportamiento documentado: ~30% de motos usa vereda hacia Puente Muñiz.
+    origen:
+      desc: "Lorenzo Casey, lado sur de las vías (antes de la barrera)"
+      lat: -34.57821
+      lon: -59.10656
+      osm_ref: "FC Sarmiento level_crossing (nodo 2704653075 — confirmado OSM)"
+    destino:
+      desc: "Lorenzo Casey, lado norte de las vías (después de la barrera)"
+      lat: -34.57613
+      lon: -59.09979
+      osm_ref: "FC Sarmiento level_crossing (nodo 2791297653 — proxy, confirmar)"
+    horario_critico: "07:30-08:30 días hábiles"
+    nota_local: >
+      La barrera baja con mucha antelación al paso del tren.
+      El tiempo de espera es uno de los mayores de la red.
+    validado_residente: false
+
+  - id: v_fc_constitucion
+    nombre: "FFCC × área Constitución / Ruta 7"
+    tipologia: B
+    descripcion: >
+      Cruce del FC Sarmiento en la zona de acceso sur (cerca de Constitución
+      y el nudo con Ruta Provincial 7). Identificado en OSM.
+    origen:
+      desc: "Sur de las vías — zona acceso Ruta 7 / Constitución"
+      lat: -34.57688
+      lon: -59.08954
+      osm_ref: "FC Sarmiento level_crossing (nodo 2791274010 — confirmado OSM)"
+    destino:
+      desc: "Norte de las vías — continuación hacia el centro"
+      lat: -34.57432
+      lon: -59.09098
+      osm_ref: "Constitución × Mitre (confirmado OSM)"
+    horario_critico: "a determinar por el residente"
+    validado_residente: false
+
+
+  # ════════════════════════════════════════
+  # TIPOLOGÍA C — CORREDORES TRONCALES
+  # ════════════════════════════════════════
+
+  - id: v_heras_completo
+    nombre: "Las Heras — corredor completo (bypass preferido)"
+    tipologia: C
+    descripcion: >
+      El bypass más usado del centro. Desde Constitución (rotonda entrada este)
+      hasta el único semáforo en Italia. Mide la fluidez del corredor preferido.
+      NUEVO PROBLEMA: reductores de velocidad en Alvear, Lamadrid y JM Paz.
+    origen:
+      desc: "Las Heras × Avenida Constitución (entrada desde el este)"
+      lat: -34.57607
+      lon: -59.08978
+      osm_ref: "Constitución × Las Heras (confirmado OSM)"
+    destino:
+      desc: "Las Heras × Italia (semáforo — único del tramo)"
+      lat: -34.56748
+      lon: -59.11757
+      osm_ref: "Italia × Las Heras (confirmado OSM — semáforo aquí)"
+    horario_critico: "07:30-08:30 y 17:00-18:30 días hábiles"
+    nota_local: >
+      Este vector es la línea de base para el análisis de degradación.
+      Al comparar su friction_index con el del corredor Constitución/Pellegrini
+      paralelo, se cuantifica el "efecto de evasión" documentado por el residente.
+    validado_residente: false
+
+  - id: v_heras_lomadas
+    nombre: "Las Heras — tramo con nuevas lomadas (Alvear–Paz)"
+    tipologia: C
+    descripcion: >
+      Sub-tramo de Las Heras con los nuevos reductores de velocidad.
+      Mide el impacto específico de las lomadas instaladas recientemente.
+    origen:
+      desc: "Las Heras × Alvear (reductor de velocidad)"
+      lat: -34.57142
+      lon: -59.10508
+      osm_ref: "Las Heras × Alvear (confirmado OSM)"
+    destino:
+      desc: "Las Heras × José María Paz (reductor de velocidad)"
+      lat: -34.57053
+      lon: -59.10780
+      osm_ref: "Las Heras × José María Paz (confirmado OSM)"
+    nota_local: >
+      Este tramo corto mide directamente el impacto de la nueva señalización.
+      Si el friction_index es > 0.5, la lomada está generando más fricción de
+      la esperada para la distancia (~300m).
+    validado_residente: false
+
+  - id: v_humberto_este
+    nombre: "Humberto I — tramo este (25 de Mayo → San Martín)"
+    tipologia: C
+    descripcion: >
+      Primer tramo de Humberto I ingresando al casco céntrico desde el este.
+    origen:
+      desc: "Humberto I × 25 de Mayo"
+      lat: -34.56459
+      lon: -59.10999
+      osm_ref: "25 de Mayo × Humberto Primo (confirmado OSM)"
+    destino:
+      desc: "Humberto I × San Martín (intersección central)"
+      lat: -34.56693
+      lon: -59.11095
+      osm_ref: "San Martín × Humberto Primo (confirmado OSM)"
+    horario_critico: "07:30-08:30 y 17:30-19:00"
+    validado_residente: false
+
+  - id: v_humberto_oeste
+    nombre: "Humberto I — tramo oeste (San Martín → Muñiz)"
+    tipologia: C
+    descripcion: >
+      Segundo tramo de Humberto I hacia el oeste hasta el cruce con Dr. Muñiz.
+      Incluye el semáforo Mitre y Humberto.
+    origen:
+      desc: "Humberto I × San Martín"
+      lat: -34.56693
+      lon: -59.11095
+      osm_ref: "San Martín × Humberto Primo (confirmado OSM)"
+    destino:
+      desc: "Humberto I × Dr. Muñiz / Av. España"
+      lat: -34.57151
+      lon: -59.11301
+      osm_ref: "Humberto Primo × Dr. Francisco Javier Muñiz (confirmado OSM)"
+    validado_residente: false
+
+  - id: v_pellegrini_norte
+    nombre: "Carlos Pellegrini — tramo norte (Francia → Humberto)"
+    tipologia: C
+    descripcion: >
+      Tramo norte del corredor Pellegrini. El más evitado según el residente.
+      Se mide para cuantificar cuánto más lento es que las alternativas.
+    origen:
+      desc: "Carlos Pellegrini × Francia (límite norte del área comercial)"
+      lat: -34.55671
+      lon: -59.11578
+      osm_ref: "Pellegrini × Francia (confirmado OSM)"
+    destino:
+      desc: "Carlos Pellegrini × Humberto I"
+      lat: -34.56105
+      lon: -59.10820
+      osm_ref: "Pellegrini × Humberto Primo (confirmado OSM)"
+    nota_local: >
+      VECTOR DE DIAGNÓSTICO COMPARATIVO: si su friction_index es 2x mayor
+      que el de v_heras_completo (tramo paralelo), confirma el fracaso
+      funcional de la avenida.
+    validado_residente: false
+
+  - id: v_pellegrini_sur
+    nombre: "Carlos Pellegrini — tramo sur (Humberto → Rawson)"
+    tipologia: C
+    descripcion: >
+      Tramo sur del corredor, con semáforos en Rawson y Sarmiento consecutivos.
+    origen:
+      desc: "Carlos Pellegrini × Humberto I"
+      lat: -34.56105
+      lon: -59.10820
+      osm_ref: "Pellegrini × Humberto Primo (confirmado OSM)"
+    destino:
+      desc: "Carlos Pellegrini × Dr. Rawson"
+      lat: -34.56335
+      lon: -59.10228
+      osm_ref: "Pellegrini × Rawson (confirmado OSM)"
+    validado_residente: false
+
+  - id: v_sanmartin_comercial
+    nombre: "San Martín — corazón comercial (Mitre → Humberto)"
+    tipologia: C
+    descripcion: >
+      El tramo más denso de San Martín: municipalidad, plaza, hospital,
+      bancos. Semáforos desincronizados generan cola constante.
+    origen:
+      desc: "San Martín × Bartolomé Mitre"
+      lat: -34.56811
+      lon: -59.11146
+      osm_ref: "Mitre × Humberto Primo (proxy — ajustar con residente)"
+    destino:
+      desc: "San Martín × Humberto I"
+      lat: -34.56693
+      lon: -59.11095
+      osm_ref: "San Martín × Humberto Primo (confirmado OSM)"
+    nota_local: >
+      La plaza Colón y el hospital generan estacionamiento en doble fila.
+      La fricción real puede ser mayor que lo que mide el tiempo de viaje puro.
+    validado_residente: false
+
+  - id: v_constitucion_norte
+    nombre: "Constitución — tramo norte (Mitre → Libertad)"
+    tipologia: C
+    descripcion: >
+      Tramo norte del eje Constitución con semáforos consecutivos.
+      Se mide para cuantificar el tiempo "real" frente al teórico.
+    origen:
+      desc: "Constitución × Bartolomé Mitre"
+      lat: -34.57432
+      lon: -59.09098
+      osm_ref: "Constitución × Mitre (confirmado OSM)"
+    destino:
+      desc: "Constitución × Libertad"
+      lat: -34.56572
+      lon: -59.09699
+      osm_ref: "Constitución × Libertad (confirmado OSM)"
+    nota_local: >
+      Comparar este tiempo con el de v_heras_completo (tramo paralelo).
+      La diferencia cuantifica el "efecto de evasión" hacia Las Heras.
+    validado_residente: false
+
+  - id: v_almirante_brown_bypass
+    nombre: "Almirante Brown — bypass rotonda Ruta 7/5 → Basílica"
+    tipologia: C
+    descripcion: >
+      El bypass informal sin semáforos más importante de la ciudad.
+      El conductor que entra por Ruta 7 y va a la Basílica usa esta ruta
+      en lugar de Constitución/Pellegrini. Mide la alternativa que funciona.
+    origen:
+      desc: "Almirante Brown, extremo este (zona rotonda Ruta 7 / Constitución)"
+      lat: -34.57432
+      lon: -59.09098
+      osm_ref: "Zona rotonda Constitución × Mitre (proxy — confirmar con residente)"
+    destino:
+      desc: "Almirante Brown × Av. Nuestra Señora de Luján"
+      lat: -34.56055
+      lon: -59.11992
+      osm_ref: "Almirante Brown × Av. NSra. de Luján (confirmado OSM)"
+    nota_local: >
+      Sin semáforos. El friction_index esperado es ~0.1-0.2 (flujo casi libre).
+      Si es mayor, algún obstáculo nuevo fue instalado.
+    validado_residente: false
+
+  - id: v_basilical_finde
+    nombre: "Av. Nuestra Señora de Luján — eje turístico (fin de semana)"
+    tipologia: C
+    descripcion: >
+      El corredor basilical principal. Máxima ocupación los fines de semana.
+      Medir específicamente sábados y domingos entre 11:00 y 18:00.
+    origen:
+      desc: "Acceso Av. NSra. de Luján desde Ruta 7 (entrada al eje basilical)"
+      lat: null
+      lon: null
+      osm_ref: "PENDIENTE — confirmar punto exacto de acceso con residente"
+    destino:
+      desc: "Frente a la Basílica (extremo del eje turístico)"
+      lat: null
+      lon: null
+      osm_ref: "PENDIENTE"
+    horario_critico: "sábados y domingos 11:00-18:00; sábados de octubre: desde 08:00"
+    nota_local: >
+      En días de peregrinación masiva este vector debe ser marcado como
+      'outlier_evento' — los datos no son representativos del patrón normal.
+    validado_residente: false
+
+  - id: v_bypass_simone_completo
+    nombre: "Bypass norte-sur: Ex Ruta 5 → Fray Torres (vía Simone/Pérez)"
+    tipologia: C
+    descripcion: >
+      El "atajo estratégico" completo de sur a norte sin pasar por el centro.
+      Incluye el cruce más crítico de la ciudad (río + FFCC en Simone).
+      Es la ruta que usa el conductor informado pero colapsa con la barrera.
+    origen:
+      desc: "Ex Ruta Nacional 5 × Pascual Simone (semáforo muy lento)"
+      lat: -34.58739
+      lon: -59.11432
+      osm_ref: "Ex Ruta Nacional 5 × Intendente Pascual Simone (confirmado OSM)"
+    destino:
+      desc: "Julio A. Roca × Av. Fray Manuel de Torres (salida norte del bypass)"
+      lat: -34.55803
+      lon: -59.12956
+      osm_ref: "Julio A. Roca × Fray Manuel de Torres (confirmado OSM)"
+    horario_critico: "07:30-08:30 días hábiles"
+    nota_local: >
+      Este vector mide el escenario de ruta alternativa completa.
+      Comparar con el tiempo por el centro en el mismo horario.
+    validado_residente: false
+
+  - id: v_fray_torres_semaforos
+    nombre: "Fray Manuel de Torres — tramo con semáforos lentos"
+    tipologia: C
+    descripcion: >
+      Tramo de Fray Torres con los semáforos problemáticos en Roca y en
+      J.M. Pérez. Conexión crítica para residentes de Pueblo Nuevo y Jáuregui.
+    origen:
+      desc: "Fray Manuel de Torres × Julio Argentino Roca (semáforo lento)"
+      lat: -34.55803
+      lon: -59.12956
+      osm_ref: "Roca × Fray Manuel de Torres (confirmado OSM)"
+    destino:
+      desc: "Fray Manuel de Torres × José María Pérez (semáforo lento)"
+      lat: null
+      lon: null
+      osm_ref: "PENDIENTE — no encontrado en esta query"
+    nota_local: "Confirmar secuencia exacta de semáforos con residente"
+    validado_residente: false
+
+  - id: v_exruta5_simone
+    nombre: "Ex Ruta Nacional 5 — tramo sur (semáforo Simone)"
+    tipologia: C
+    descripcion: >
+      Tramo de la Ex Ruta 5 en el sector del semáforo de Pascual Simone.
+      Confirmar si hay un segundo semáforo en Insausti (mano única al norte).
+    origen:
+      desc: "Ex Ruta 5, unos 500m al norte del semáforo de Simone"
+      lat: -34.58200
+      lon: -59.11432
+      osm_ref: "Proxy — ajustar"
+    destino:
+      desc: "Ex Ruta 5 × Pascual Simone"
+      lat: -34.58739
+      lon: -59.11432
+      osm_ref: "Ex Ruta Nacional 5 × Intendente Pascual Simone (confirmado OSM)"
+    validado_residente: false
+
+  - id: v_casey_corredor
+    nombre: "Av. Lorenzo Casey — acceso a estación y barrio sur"
+    tipologia: C
+    descripcion: >
+      Arteria que conecta el centro con la Estación Luján del FC Sarmiento
+      y los barrios sur. El paso a nivel es el cuello de botella principal.
+    origen:
+      desc: "Lorenzo Casey, inicio del tramo relevante (desde centro)"
+      lat: null
+      lon: null
+      osm_ref: "PENDIENTE — confirmar con residente punto de inicio"
+    destino:
+      desc: "Lorenzo Casey × FC Sarmiento (paso a nivel)"
+      lat: -34.57821
+      lon: -59.10656
+      osm_ref: "FC Sarmiento level_crossing (confirmado OSM)"
+    validado_residente: false
+
+  - id: v_muñiz_nuevosemaforo
+    nombre: "Dr. Muñiz — tramo con semáforo nuevo (9 de Julio y Núñez)"
+    tipologia: C
+    descripcion: >
+      Tramo donde se instaló recientemente un semáforo en 9 de Julio y Núñez.
+      Mide el impacto del nuevo semáforo en la fricción del corredor.
+    origen:
+      desc: "Dr. Muñiz × Humberto I (inicio del tramo)"
+      lat: -34.57151
+      lon: -59.11301
+      osm_ref: "Humberto Primo × Dr. Muñiz (confirmado OSM)"
+    destino:
+      desc: "Dr. Muñiz × Mariano Moreno (semáforo anterior al nuevo)"
+      lat: null
+      lon: null
+      osm_ref: "PENDIENTE"
+    nota_local: "El semáforo 9 de Julio / Núñez es reciente — comparar con datos históricos si existen"
+    validado_residente: false
+
+  - id: v_rotonda_domingo
+    nombre: "Nudo rotonda Ruta 7 / Ruta Prov 7 / Constitución (domingos tarde)"
+    tipologia: C
+    descripcion: >
+      El cuello de botella semanal más predecible. Domingos de 16:00 a 20:00,
+      el retorno Buenos Aires ← interior carga masivamente este nudo.
+      MEDIR ÚNICAMENTE EN DOMINGOS TARDE para capturar el patrón real.
+    origen:
+      desc: "Acceso este: Ruta Nacional 7 antes de la rotonda"
+      lat: null
+      lon: null
+      osm_ref: "PENDIENTE — confirmar con residente límite del embudo"
+    destino:
+      desc: "Salida hacia Ruta Provincial 7 (desvío hacia Buenos Aires)"
+      lat: null
+      lon: null
+      osm_ref: "PENDIENTE"
+    horario_critico: "domingos 16:00-20:00 EXCLUSIVAMENTE"
+    marcar_como_outlier: false
+    nota_local: >
+      Este vector tiene un patrón temporal específico. El n8n workflow debe
+      disparar mediciones cada 30 min solo en este horario los domingos.
+    validado_residente: false
+
+  - id: v_adolfo_alsina
+    nombre: "Adolfo Alsina — conector Jáuregui → centro → Fernández/Ruta 7"
+    tipologia: C
+    descripcion: >
+      Arteria vital para residentes de Jáuregui y Pueblo Nuevo.
+      Corre paralela a Humberto I. Desemboca en calle Fernández (→ Ruta 7).
+    origen:
+      desc: "Adolfo Alsina en el límite de Jáuregui / ingreso a Luján"
+      lat: null
+      lon: null
+      osm_ref: "PENDIENTE — confirmar con residente"
+    destino:
+      desc: "Adolfo Alsina × Fernández (conexión con Ruta 7)"
+      lat: null
+      lon: null
+      osm_ref: "PENDIENTE"
+    nota_local: "Comparar con Humberto I en el mismo horario para medir si es alternativa real"
+    validado_residente: false
+
+
+# ══════════════════════════════════════════════════════════════
+# RESUMEN PARA VALIDACIÓN
+# ══════════════════════════════════════════════════════════════
+
+resumen:
+  total_vectores: 20
+  coordenadas_confirmadas_osm: 14
+  coordenadas_pendientes: 6
+
+  pendientes_validacion_residente:
+    - "v_pte_gálvez: extremo oeste de Las Heras (¿cómo se llama el puente?)"
+    - "v_basilical_finde: puntos de inicio y fin del eje turístico"
+    - "v_rotonda_domingo: límites exactos del embudo Ruta 7"
+    - "v_fray_torres_semaforos: coordenada de Fray Torres × J.M. Pérez"
+    - "v_casey_corredor: inicio del tramo relevante"
+    - "v_adolfo_alsina: extremos del corredor"
+
+  preguntas_para_el_residente:
+    - "¿Cómo se llama el puente al final de Las Heras? ¿Es bidireccional?"
+    - "¿El bypass Almirante Brown empieza exactamente en la rotonda de Ruta 7 × Constitución?"
+    - "¿La Av. NSra. de Luján tiene semáforos en días normales de semana?"
+    - "¿Adolfo Alsina tiene semáforos a lo largo del recorrido?"
+    - "¿El semáforo de Insausti y Ex Ruta 5 es solo en un sentido o en ambos?"

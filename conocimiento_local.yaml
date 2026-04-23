@@ -1,0 +1,515 @@
+# ══════════════════════════════════════════════════════════════
+# CONOCIMIENTO LOCAL — Luján, Buenos Aires
+# Fuente: residente-conductor local (informante clave)
+# Fecha de registro: 2026-04-19
+# Estado: VALIDADO POR RESIDENTE
+# ══════════════════════════════════════════════════════════════
+
+# ──────────────────────────────────────────
+# SECCIÓN 0: ÁREA DE ESTUDIO
+# ──────────────────────────────────────────
+area_estudio:
+  descripcion: >
+    Polígono urbano de Luján que concentra el tránsito local y turístico relevante.
+  limites:
+    sur: "Calle Pascual Simone (ex-Ruta Nacional 5 / Colectora Sur)"
+    norte: "Acceso Oeste (Ruta Nacional 7) y Ruta Provincial 192 (Primero de Mayo)"
+    oeste: "Avenida Fray Manuel de Torres + cauce del Río Luján"
+    este: "Ruta 5 (colectora / ex-Ruta Nacional 5)"
+  notas: >
+    El área queda dividida en dos mitades por el Río Luján y las vías del
+    Ferrocarril Sarmiento. Los pocos puntos de cruce (puentes + pasos a nivel)
+    son los principales cuellos de botella estructurales de la ciudad.
+
+
+# ──────────────────────────────────────────
+# SECCIÓN 1: ZONAS CRÍTICAS
+# ──────────────────────────────────────────
+zonas_criticas:
+
+  - id: zona_turistica
+    nombre: "Zona Turística / Basilical"
+    descripcion: >
+      Epicentro: Basílica de Luján + Av. Nuestra Señora de Luján.
+      Límites: San Martín, 25 de Mayo, 9 de Julio, Lezica y Torrezuri.
+      Alta ocupación todos los fines de semana. Sábados de peregrinación:
+      saturación extrema desde las 8:00. El eje Av. NSra. de Luján y
+      9 de Julio hasta Francia concentran todo el flujo turístico nacional.
+    tipo_flujo: "turístico nacional + autobuses de peregrinación"
+    patron_temporal: "fines de semana todo el año; sábados de octubre pico máximo"
+    nivel_conflicto_con_flujo_local: "alto"
+
+  - id: zona_comercial
+    nombre: "Zona Comercial / Administrativa"
+    descripcion: >
+      El área más densa para el residente lujanense.
+      Límites: 25 de Mayo, Francia, Las Heras, Humberto I.
+      Concentra: Hospital Zonal (entre Vicente López y Gral. Belgrano),
+      Plaza Colón, Municipalidad, Bancos, Comercios sobre San Martín.
+      Tránsito lento por semáforos desincronizados y presencia de
+      colectivos de línea.
+    tipo_flujo: "residente local + commercial + institucional"
+    patron_temporal: "lunes a viernes picos 07:30-08:30 y 17:30-19:00"
+    nivel_conflicto_con_flujo_local: "alto"
+
+
+# ──────────────────────────────────────────
+# SECCIÓN 2: VÍAS TRONCALES — DESCRIPCIÓN COMPLETA
+# ──────────────────────────────────────────
+vias_troncales:
+
+  - id: via_las_heras
+    nombre: "General Las Heras"
+    tipo: "calle colectora — bypass preferido"
+    descripcion: >
+      Inicia en Av. Constitución (rotonda/intersección principal) y llega hasta el
+      Río Luján. Una de las pocas calles del centro que prácticamente no tiene
+      semáforos: solo uno en la intersección de Italia y Gral. Las Heras
+      (semáforo corto, simple, sin mayor traba).
+      Es la vía de entrada preferida por el conductor local que quiere evitar
+      San Martín o Constitución al ingresar desde el este/rotonda.
+    semaforos: ["Italia y Las Heras (simple, corto)"]
+    reductores_velocidad:
+      - "Las Heras y Lamadrid (nuevo, para dar paso a Lamadrid)"
+      - "Las Heras y Alvear (nuevo, para dar paso a Alvear)"
+      - "Las Heras y José María Paz (nuevo, para dar paso a J.M.Paz que viene por la derecha)"
+    nota_critica: >
+      PROBLEMA NUEVO: La instalación reciente de reductores de velocidad (lomadas)
+      en Lamadrid, Alvear y JM Paz ha ralentizado significativamente esta vía que
+      antes era el bypass más fluido del centro. El conductor local todavía la
+      prefiere pero ya nota la degradación.
+    uso_habitual: "bypass para evitar Constitución/San Martín al ir al centro desde el este"
+    prioridad_medicion: "ALTA"
+
+  - id: via_constitucion_pellegrini
+    nombre: "Av. Constitución / Carlos Pellegrini"
+    tipo: "avenida principal — EVITADA por exceso de semaforos"
+    descripcion: >
+      Es la arteria de circunvalación teórica norte-sur. En la práctica
+      es completamente evitada por el conductor local debido a la densidad
+      de semáforos (prácticamente uno por cuadra) y la falta de onda verde.
+      La gente prefiere calles paralelas internas (Brown, Las Heras, etc.)
+    semaforos:
+      - "Mitre y Constitución"
+      - "San Martín y Constitución"
+      - "Libertad y Constitución"
+      - "Carlos Pellegrini y Dr. Rawson"
+      - "Carlos Pellegrini y José María Paz"
+      - "Carlos Pellegrini y Sarmiento"
+      - "Carlos Pellegrini y Humberto I"
+      - "Carlos Pellegrini y Adolfo Alsina"
+      - "Carlos Pellegrini y Beschtedt"
+      - "Carlos Pellegrini y Joaquín V. González"
+      - "Carlos Pellegrini y Francia"
+    nota_critica: >
+      Diagnóstico: esta avenida es teóricamente la espina dorsal de la ciudad
+      pero es funcional y conductualmente irrelevante porque nadie la usa.
+      Representa la ineficiencia más clara del sistema semafórico: una inversión
+      grande en infraestructura que generó el efecto contrario al deseado.
+    uso_habitual: "casi no se usa por conductor local informado"
+    prioridad_medicion: "MUY ALTA — medir el tiempo perdido vs alternativas"
+
+  - id: via_san_martin
+    nombre: "San Martín"
+    tipo: "arteria principal comercial"
+    descripcion: >
+      Calle principal pero "trabada" por falta de sincronización en semáforos.
+      Concentra el Hospital Zonal (entre Vicente López y Gral. Belgrano),
+      Plaza Colón, Municipalidad, bancos y comercios principales.
+      El conductor local la evita para el tránsito de paso; la usa para
+      destinos específicos (hospital, banco, municipalidad).
+    semaforos:
+      - "Mitre y San Martín"
+      - "Constitución y San Martín"
+      - "Güemes y San Martín"
+      - "Humberto I y San Martín"
+    uso_habitual: "destinos puntuales, no de paso"
+    prioridad_medicion: "ALTA"
+
+  - id: via_humberto
+    nombre: "Humberto I"
+    tipo: "arteria principal este-oeste"
+    descripcion: >
+      Eje principal este-oeste del casco urbano. Más usada que San Martín
+      para atravesar el centro. Semaforizada pero con mayor fluidez relativa.
+    semaforos:
+      - "25 de Mayo y Humberto I"
+      - "San Martín y Humberto I"
+      - "Mitre y Humberto I"
+      - "España / Dr. Muñiz y Humberto I"
+    prioridad_medicion: "ALTA"
+
+  - id: via_muñiz_españa
+    nombre: "Dr. Muñiz / Av. España"
+    tipo: "arteria norte-sur secundaria"
+    descripcion: >
+      Arteria norte-sur importante. Nuevos semáforos sobre el tramo añaden
+      fricción. El de 9 de Julio y Núñez es reciente y aumenta la congestión.
+    semaforos:
+      - "Adolfo Alsina y Dr. Muñiz"
+      - "Mariano Moreno y Dr. Muñiz"
+      - "9 de Julio y Núñez (NUEVO — fricción adicional reciente)"
+    nota_critica: >
+      La adición de semáforos sin estudio de fluidez agregada es el patrón
+      problemático de la gestión vial de Luján: se instalan por pedido
+      vecinal o "percepción de peligro" sin evaluar el impacto en la red.
+    prioridad_medicion: "MEDIA"
+
+  - id: via_adolfo_alsina
+    nombre: "Adolfo Alsina"
+    tipo: "conector interurbano — Jáuregui → centro"
+    descripcion: >
+      Vía vital que une la localidad de Jáuregui con el centro de Luján.
+      Corre paralela a Humberto I. Desemboca en la calle Fernández,
+      que conecta con la Ruta Nacional 7 (Acceso Oeste).
+      También sirve como arteria de distribución interna paralela a Humberto.
+    uso_habitual: "residentes de Jáuregui y Pueblo Nuevo al ingresar a Luján"
+    prioridad_medicion: "MEDIA"
+
+  - id: via_fray_torres
+    nombre: "Av. Fray Manuel de Torres"
+    tipo: "arteria estructural — lado oeste del río"
+    descripcion: >
+      Corre por el lado oeste del Río Luján. Conecta Luján hacia el norte
+      con Pueblo Nuevo y Jáuregui (localidades dependientes de Luján).
+      Tiene semáforos lentos en las intersecciones con J.M. Pérez y J.A. Roca
+      que generan fricciones importantes para el flujo norte-sur.
+    semaforos:
+      - "Fray Manuel de Torres y José María Pérez (LENTO)"
+      - "Fray Manuel de Torres y Julio Argentino Roca (LENTO)"
+    uso_habitual: "conexión Luján - Pueblo Nuevo - Jáuregui"
+    prioridad_medicion: "MEDIA-ALTA"
+
+  - id: via_bypass_simone_perez
+    nombre: "Pascual Simone → José M. Pérez (bypass norte-sur)"
+    tipo: "atajo estructural — el 'bypass interno' más importante"
+    descripcion: >
+      La conexión más importante para quienes quieren cruzar de la zona sur
+      a la zona norte de la ciudad sin entrar al casco céntrico.
+      El recorrido: Pascual Simone → cruza el río → cruza el FFCC Sarmiento
+      → se convierte en José M. Pérez → llega a Fray Manuel de Torres.
+      DOBLE BARRERA: cruza tanto el río como el paso a nivel del FFCC.
+      Es el atajo que usa el conductor informado pero también el punto de
+      máxima vulnerabilidad cuando baja la barrera del tren.
+    semaforos:
+      - "Pascual Simone y ex-Ruta Nacional 5 (MUY LENTO)"
+    paso_a_nivel: true
+    nota_critica: >
+      Cuando la barrera del FFCC baja, este bypass colapsa completamente
+      y el tráfico queda atrapado entre el río (ya cruzado) y el paso a nivel.
+      Es el punto de máxima fricción no capturado por ningún sensor.
+    prioridad_medicion: "MUY ALTA"
+
+  - id: via_almirante_brown
+    nombre: "Almirante Brown"
+    tipo: "bypass informal — sin semáforos"
+    descripcion: >
+      Calle sin semáforos que se usa como bypass desde la rotonda de
+      Ruta 7 / Ruta Provincial 7 hasta la zona de la Basílica.
+      El conductor que entra por la Ruta 7 y quiere ir a la Basílica
+      NO toma Constitución / Pellegrini (demasiados semáforos):
+      va por Almirante Brown y en todo caso sale a la Av. NSra. de Luján
+      o toma antes por Colón para entrar a Pellegrini.
+    semaforos: []
+    nota_critica: >
+      Es un bypass funcional de facto que absorbe tráfico que "debería" ir
+      por Constitución. Su medición es clave para cuantificar el fracaso
+      funcional de las avenidas principales.
+    prioridad_medicion: "ALTA"
+
+  - id: via_basilical
+    nombre: "Av. Nuestra Señora de Luján"
+    tipo: "eje turístico/basilical"
+    descripcion: >
+      La arteria principal de acceso a la Basílica. Alta ocupación todos los
+      fines de semana, especialmente sábados y domingos. Los 9 de julio hasta
+      Francia son parte de la zona turística central. Tránsito mezclado:
+      turistas + peregrinos + micros + residentes.
+    patron_temporal: "máxima ocupación fines de semana 10:00-18:00"
+    prioridad_medicion: "ALTA — especialmente muestreo fin de semana"
+
+  - id: via_ex_ruta5
+    nombre: "Ex Ruta Nacional 5 (Colectora Sur/Norte)"
+    tipo: "arteria periférica sur"
+    descripcion: >
+      Antigua traza de Ruta 5. Ahora es una colectora. Semáforos:
+      uno en Insausti (solo mano hacia el norte) y uno muy lento en
+      Pascual Simone. Conecta la zona sur con el área periurbana.
+    semaforos:
+      - "Insausti y ex-Ruta 5 (mano única al norte)"
+      - "Pascual Simone y ex-Ruta 5 (MUY LENTO)"
+    prioridad_medicion: "MEDIA"
+
+  - id: via_casey
+    nombre: "Av. Lorenzo Casey"
+    tipo: "conector hacia estación de tren"
+    descripcion: >
+      Conector crítico hacia la Estación Luján de FC Sarmiento y los barrios del sur.
+      Paso a nivel del FFCC sobre esta arteria es el cuello de botella principal
+      del sector sur.
+    paso_a_nivel: true
+    prioridad_medicion: "ALTA — barrera FFCC es el cuello de botella más dinámico"
+
+  - id: via_ruta192
+    nombre: "Ruta 192 / Primero de Mayo"
+    tipo: "salida norte"
+    descripcion: >
+      Eje hacia el norte: conecta con Open Door y luego con la Ruta Provincial 6.
+      Importante como salida de la ciudad hacia el norte.
+    prioridad_medicion: "BAJA (fuera del área de estudio principal)"
+
+
+# ──────────────────────────────────────────
+# SECCIÓN 3: SEMÁFOROS LENTOS / PROBLEMÁTICOS
+# ──────────────────────────────────────────
+semaforos_problematicos:
+  # Los más críticos según el conductor local
+
+  - interseccion: "Carlos Pellegrini / Humberto I"
+    severidad: "alta"
+    razon: "Semáforo en arteria principal con fase corta para Humberto. Cola constante."
+
+  - interseccion: "Pascual Simone y ex-Ruta Nacional 5"
+    severidad: "muy alta"
+    razon: "Semáforo muy lento. Es el cuello de botella del bypass sur."
+
+  - interseccion: "Fray Manuel de Torres y José María Pérez"
+    severidad: "alta"
+    razon: "Semáforo lento en arteria de conexión con zona oeste."
+
+  - interseccion: "Fray Manuel de Torres y Julio Argentino Roca"
+    severidad: "alta"
+    razon: "Ídem, mismo corredor."
+
+  - interseccion: "Muñiz / 9 de Julio y Núñez"
+    severidad: "media-alta"
+    razon: "Nuevo semáforo. Agrega fricción a un corredor que antes fluía mejor."
+
+  sindrome_general: >
+    Los semáforos de Luján NO están coordinados entre sí. En las avenidas
+    Constitución/Pellegrini hay un semáforo cada 1-2 cuadras y ninguno
+    está sincronizado. Esto hace que sea más rápido ir por calles paralelas
+    sin semáforos que por las avenidas principales — un indicador claro
+    de mala planificación vial.
+
+
+# ──────────────────────────────────────────
+# SECCIÓN 4: LOMAS DE BURRO Y REDUCTORES DE VELOCIDAD
+# ──────────────────────────────────────────
+lomas_de_burro:
+
+  - id: lb_heras_lamadrid
+    calle: "Gral. Las Heras"
+    interseccion: "Las Heras y Lamadrid"
+    tipo: "reductor de velocidad (nuevo)"
+    justificacion_oficial: "para dar paso a la calle Lamadrid"
+    efecto_trafico: "ralentiza flujo sobre Las Heras, que era el bypass más fluido del centro"
+    evaluacion_residente: "innecesario — Lamadrid no tiene el tránsito que justifique interrumpir Las Heras"
+
+  - id: lb_heras_alvear
+    calle: "Gral. Las Heras"
+    interseccion: "Las Heras y Alvear"
+    tipo: "reductor de velocidad (nuevo)"
+    justificacion_oficial: "para dar paso a Alvear"
+    efecto_trafico: "suma fricción al corredor Las Heras"
+    evaluacion_residente: "cuestionable en términos de proporcionalidad"
+
+  - id: lb_heras_jmperez
+    calle: "Gral. Las Heras"
+    interseccion: "Las Heras y José María Paz"
+    tipo: "reductor de velocidad (nuevo)"
+    justificacion_oficial: "para dar paso a J.M.Paz (que tiene mano por la derecha)"
+    efecto_trafico: "suma fricción; J.M.Paz tiene mano por derecha pero el reductor interrumpe el flujo de Las Heras"
+    evaluacion_residente: "decisión inconsistente con la jerarquía vial"
+
+  - id: lb_alem_mitre
+    calle: "Alem (corta Mitre)"
+    interseccion: "Alem y Mitre"
+    tipo: "reductor de velocidad"
+    efecto_trafico: "genera frenada en Mitre para una calle de menor jerarquía"
+    evaluacion_residente: "ejemplo de señalización redundante o inadecuada — se le pone reductor a una calle que no tiene prioridad"
+
+
+# ──────────────────────────────────────────
+# SECCIÓN 5: NODOS DE CONFLICTO CRÍTICOS
+# ──────────────────────────────────────────
+conflictos_conocidos:
+
+  - id: cf_rotonda_ruta7_prov7
+    interseccion: "Rotonda Av. Constitución + Ruta Provincial 7 + ex-Ruta Nacional 5"
+    tipo: "saturación_nodo_multimodal"
+    descripcion: >
+      Los domingos por la tarde se convierte en el cuello de botella más severo
+      de la ciudad. La Ruta Provincial 7 actúa como alivio del retorno
+      Buenos Aires → interior, pero el nudo de esta rotonda colapsa porque
+      concentra: retorno de turistas (Ruta 7 hacia el este), tráfico local,
+      y el flujo de la Ruta Provincial 7.
+    horario_critico: "domingos 16:00-20:00 (retorno hacia Buenos Aires)"
+    dias: ["domingo"]
+    nivel_riesgo_estimado: "alto"
+    tipo_problema: "saturación puntual semanal — no es el foco del análisis diario"
+
+  - id: cf_fc_simone_doble_barrera
+    interseccion: "Pascual Simone + cruce FFCC Sarmiento"
+    tipo: "barrera_ferroviaria + cuello_de_botella_bypass"
+    descripcion: >
+      El bypass Pascual Simone → José M. Pérez cruza tanto el Río Luján
+      como el paso a nivel del FFCC. Cuando la barrera baja, el tráfico
+      que ya cruzó el puente queda atrapado entre el río (detrás) y el
+      paso a nivel (adelante). No hay posibilidad de retroceder fácilmente.
+      Es el punto de máxima frustración para el conductor que usa el bypass.
+    horario_critico: "cualquier horario cuando el tren pasa (frecuencia FC Sarmiento)"
+    nivel_riesgo_estimado: "alto — por atrapamiento y maniobras desesperadas"
+    tipo_accidente_probable: "moto que intenta zigzaguear entre barreras"
+
+  - id: cf_fc_casey
+    interseccion: "Av. Lorenzo Casey + cruce FFCC Sarmiento"
+    tipo: "barrera_ferroviaria"
+    descripcion: >
+      La barrera del FFCC en Lorenzo Casey baja con antelación al paso del tren.
+      En horario pico mañana (07:30-08:30) coincide con alta demanda hacia la
+      estación y el centro. Cola se extiende varias cuadras.
+      Comportamiento observado: el 30% de las motos dobla hacia la vereda
+      para buscar el Puente Muñiz como alternativa.
+    horario_critico: "07:30-08:30 días hábiles"
+    nivel_riesgo_estimado: "alto"
+    tipo_accidente_probable: "moto en vereda / cruce desesperado"
+
+  - id: cf_constitucion_efecto_evasion
+    interseccion: "Av. Constitución / Carlos Pellegrini (corredor completo)"
+    tipo: "ineficiencia_estructural_semaforica"
+    descripcion: >
+      Las avenidas principales son más lentas que las calles secundarias.
+      El conductor local no usa Constitución/Pellegrini para ir de la
+      rotonda Ruta 7/5 al centro: usa Almirante Brown (sin semáforos).
+      Esto es un síntoma de fracaso de planificación vial: la arteria
+      principal no cumple su función.
+    nivel_riesgo_estimado: "bajo directo, pero ALTO sistémico"
+    tipo_problema: "la calle de mayor jerarquía tiene menor rendimiento"
+
+  - id: cf_heras_nueva_friccion
+    interseccion: "Gral. Las Heras (tramo con nuevas lomadas)"
+    tipo: "degradacion_bypass_preferido"
+    descripcion: >
+      La instalación de reductores de velocidad en Lamadrid, Alvear y
+      J.M. Paz sobre Las Heras está degradando el único bypass fluido
+      del centro. Si este proceso continúa, los conductores deberán buscar
+      nuevas alternativas (posiblemente calles residenciales).
+    nivel_riesgo_estimado: "medio — riesgo de migración a calles no aptas"
+    tipo_problema: "intervención vial contraproducente"
+
+
+# ──────────────────────────────────────────
+# SECCIÓN 6: ANOMALÍAS DE CALENDARIO
+# ──────────────────────────────────────────
+anomalias_calendario:
+
+  - evento: "Peregrinación a la Basílica (Octubre)"
+    frecuencia: "primer sábado de octubre + otras fechas del calendario mariano"
+    impacto: >
+      Av. NSra. de Luján CERRADA o severamente restringida desde temprano.
+      Todo el tráfico se redistribuye por Humberto I y San Martín.
+      Congestión severa en puentes Muñiz y Brown.
+      Imposible acceder al área basilical en vehículo particular desde las 9:00.
+    vectores_afectados: ["v_basilical", "v_pte_muniz", "v_pte_brown", "v_humberto_01", "v_humberto_02"]
+    marcar_como_outlier: true
+    impacto_nivel: "máximo"
+
+  - evento: "Retorno dominical hacia Buenos Aires"
+    frecuencia: "todos los domingos"
+    impacto: >
+      A partir de las 16:00 del domingo, Ruta Nacional 7 y Ruta Nacional 5
+      acumulan tráfico de retorno desde el interior hacia Buenos Aires.
+      El nudo de la rotonda Av. Constitución + Ruta Provincial 7 colapsa.
+      Dura típicamente hasta las 20:00-21:00.
+    vectores_afectados: ["v_rotonda_ruta7", "v_constitucion", "v_exruta5"]
+    marcar_como_outlier: false
+    impacto_nivel: "alto — es un patrón semanal predecible"
+
+  - evento: "Inicio/fin de semestre UNLu"
+    frecuencia: "marzo, julio, diciembre"
+    impacto: >
+      Pico adicional de 07:45-08:15 y 18:45-19:15 en accesos norte.
+      La Universidad Nacional de Luján genera flujos importantes de
+      estudiantes y docentes que compiten con el pico normal.
+    vectores_afectados: []
+    marcar_como_outlier: false
+    impacto_nivel: "medio"
+
+  - evento: "Feria americana (zona Hipódromo)"
+    frecuencia: "domingos eventuales"
+    impacto: >
+      Alto tráfico en acceso al hipódromo + estacionamiento en calles aledañas
+      que bloquea parcialmente las arterias de acceso.
+    vectores_afectados: ["v_av_españa"]
+    marcar_como_outlier: true
+    impacto_nivel: "medio-alto"
+
+
+# ──────────────────────────────────────────
+# SECCIÓN 7: PATRONES DE CONDUCCIÓN LOCAL
+# ──────────────────────────────────────────
+comportamiento_conductor:
+
+  evasion_avenidas: >
+    El conductor lujanense evita sistemáticamente las avenidas principales
+    (Constitución/Pellegrini, San Martín) en favor de calles secundarias
+    sin semáforos. Este comportamiento está tan arraigado que algunas
+    rutas de bypass (Almirante Brown, Las Heras) tienen más tránsito
+    que la avenida "oficial" paralela.
+
+  uso_motos: >
+    Las motos tienen un rol central en la circulación. En puntos de
+    congestión (barreras FFCC, semáforos largos) suben a las veredas
+    o zigzaguean entre filas. El cruce por la vereda en el nodo de
+    Lorenzo Casey hacia Puente Muñiz es un comportamiento habitual
+    documentado por el residente.
+
+  logica_de_rutas: >
+    El conductor lujanense usa la siguiente lógica:
+    - Para ir al centro desde el este (Ruta 7/5): Las Heras (bypass principal)
+    - Para ir al centro desde el norte (Ruta 7 acceso): Av. Constitución norte
+      (2-3 semáforos más sincronizados) si es zona Basílica; Las Heras si es
+      zona comercial.
+    - Para ir de sur a norte sin entrar al centro: Pascual Simone → J.M. Pérez
+      → Fray Manuel de Torres.
+    - Para ir de la rotonda Ruta 7/5 a la Basílica: Almirante Brown (sin
+      semáforos) → Colón → Pellegrini O directo a Av. NSra. de Luján.
+    - Para cruzar el centro de este a oeste: Humberto I (más tolerable que
+      San Martín en términos de semáforos).
+
+  senalizacion_inadecuada: >
+    El conductor identifica señalización redundante o contraproducente:
+    lomadas en calles sin prioridad (ej. Alem en Mitre), semáforos nuevos
+    sin estudio de red (9 de Julio y Núñez en Muñiz), y lomadas en la vía
+    de bypass más fluida (Las Heras) que degradan el único corredor libre.
+
+
+# ──────────────────────────────────────────
+# SECCIÓN 8: OBSERVACIONES GENERALES
+# ──────────────────────────────────────────
+observaciones_generales:
+
+  diagnostico_residente: >
+    Luján presenta un sistema donde las vías secundarias son más eficientes
+    que las principales. La falta de sincronización semafórica en las avenidas
+    troncales (Constitución-Pellegrini) las degrada funcionalmente, provocando
+    que el tráfico invada calles residenciales.
+
+    El sistema divide la ciudad en dos flujos que compiten por el mismo
+    espacio sin coordinación: el flujo turístico nacional (basílica, peregrinos,
+    turistas de fin de semana) y el flujo operativo local (residentes, comercio,
+    trabajo). No hay una gestión diferenciada para cada uno.
+
+  principales_oportunidades: >
+    1. Sincronización semafórica en Constitución/Pellegrini: si se logra una
+       onda verde mínima, esta artería recuperaría su función y aliviaría
+       las calles secundarias.
+    2. Gestión diferenciada fines de semana: la zona basilical requiere un
+       plan de tráfico específico para sábados/domingos diferente al de días
+       hábiles.
+    3. Revisión de reductores de velocidad en Las Heras: están degradando el
+       bypass más valioso del centro.
+    4. Señalización del bypass Pascual Simone → J.M. Pérez → Fray Torres:
+       si se lo señaliza claramente como ruta alternativa, puede absorber
+       más tráfico y aliviar el centro.
