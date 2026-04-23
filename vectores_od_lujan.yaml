@@ -369,12 +369,12 @@ vectores:
       desc: "Av. NSra. de Luján — extremo este (acceso desde Ruta 7 / zona entrada)"
       lat: -34.56055
       lon: -59.11992
-      osm_ref: "Almirante Brown × Av. NSra. de Luján (referencia confirmada OSM)"
+      osm_ref: "Almirante Brown × Av. NSra. de Luján (confirmado OSM)"
     destino:
-      desc: "Av. NSra. de Luján frente a la Basílica"
-      lat: null
-      lon: null
-      osm_ref: "PENDIENTE — confirmar coordenada exacta"
+      desc: "Av. NSra. de Luján — frente a la Basílica"
+      lat: -34.563873
+      lon: -59.121319
+      osm_ref: "COORDENADA VALIDADA POR RESIDENTE"
     muestreo_diferencial: true
     horario_critico_finde: "sábados y domingos 11:00-18:00"
     horario_critico_peregrinacion: "sábados de octubre desde 08:00 — marcar como outlier"
@@ -409,11 +409,11 @@ vectores:
     validado_residente: false
 
   - id: v_fray_torres_semaforos
-    nombre: "Fray Manuel de Torres — tramo con semáforos lentos"
+    nombre: "Fray Manuel de Torres — tramo con semáforos lentos (Roca → J.M. Pérez)"
     tipologia: C
     descripcion: >
-      Tramo de Fray Torres con los semáforos problemáticos en Roca y en
-      J.M. Pérez. Conexión crítica para residentes de Pueblo Nuevo y Jáuregui.
+      Tramo de Fray Torres con los dos semáforos lentos documentados por el
+      residente. Conexión crítica para residentes de Pueblo Nuevo y Jáuregui.
     origen:
       desc: "Fray Manuel de Torres × Julio Argentino Roca (semáforo lento)"
       lat: -34.55803
@@ -421,11 +421,13 @@ vectores:
       osm_ref: "Roca × Fray Manuel de Torres (confirmado OSM)"
     destino:
       desc: "Fray Manuel de Torres × José María Pérez (semáforo lento)"
-      lat: null
-      lon: null
-      osm_ref: "PENDIENTE — no encontrado en esta query"
-    nota_local: "Confirmar secuencia exacta de semáforos con residente"
-    validado_residente: false
+      lat: -34.562266
+      lon: -59.137677
+      osm_ref: "COORDENADA VALIDADA POR RESIDENTE"
+    nota_local: >
+      Ambos semáforos son lentos según el residente. El tramo entre ellos
+      (~1.2 km) es el cuello de botella principal del acceso oeste.
+    validado_residente: true
 
   - id: v_exruta5_simone
     nombre: "Ex Ruta Nacional 5 — tramo sur (semáforo Insausti + semáforo Simone)"
@@ -459,22 +461,25 @@ vectores:
     validado_residente: true
 
   - id: v_casey_corredor
-    nombre: "Av. Lorenzo Casey — acceso a estación y barrio sur"
+    nombre: "Av. Lorenzo Casey — desde centro hasta paso a nivel FFCC"
     tipologia: C
     descripcion: >
       Arteria que conecta el centro con la Estación Luján del FC Sarmiento
       y los barrios sur. El paso a nivel es el cuello de botella principal.
     origen:
-      desc: "Lorenzo Casey, inicio del tramo relevante (desde centro)"
-      lat: null
-      lon: null
-      osm_ref: "PENDIENTE — confirmar con residente punto de inicio"
+      desc: "Lorenzo Casey — inicio del tramo desde el centro"
+      lat: -34.577828
+      lon: -59.106969
+      osm_ref: "COORDENADA VALIDADA POR RESIDENTE"
     destino:
       desc: "Lorenzo Casey × FC Sarmiento (paso a nivel)"
       lat: -34.57821
       lon: -59.10656
       osm_ref: "FC Sarmiento level_crossing (confirmado OSM)"
-    validado_residente: false
+    nota_local: >
+      Tramo corto pero crítico. La varianza del friction_index en este vector
+      es el indicador más directo de actividad del FFCC Sarmiento.
+    validado_residente: true
 
   - id: v_muñiz_nuevosemaforo
     nombre: "Dr. Muñiz — tramo con semáforo nuevo (9 de Julio y Núñez)"
@@ -520,35 +525,32 @@ vectores:
     validado_residente: false
 
   - id: v_adolfo_alsina
-    nombre: "Adolfo Alsina — conector Jáuregui → centro → Fernández/Ruta 7"
+    nombre: "Adolfo Alsina — conector Jáuregui → Pellegrini (tramo urbano principal)"
     tipologia: C
     descripcion: >
       Arteria vital para residentes de Jáuregui y Pueblo Nuevo.
-      Corre paralela a Humberto I. Desemboca en Fernández (→ Ruta 7).
-      SEMÁFOROS CONFIRMADOS POR RESIDENTE:
-        - Alsina × Dr. Muñiz
-        - Alsina × Ituzaingo
-        - Alsina × Bartolomé Mitre
-        - Alsina × Carlos Pellegrini
+      Corre paralela a Humberto I. Se mide el tramo urbano principal
+      desde el ingreso a Luján (cerca de Jáuregui) hasta Pellegrini.
+      SEMÁFOROS CONFIRMADOS: Dr. Muñiz, Ituzaingo, Mitre, Carlos Pellegrini.
     origen:
-      desc: "Adolfo Alsina en el límite de Jáuregui / ingreso a Luján"
-      lat: null
-      lon: null
-      osm_ref: "PENDIENTE — confirmar coordenada exacta de inicio en Jáuregui"
+      desc: "Adolfo Alsina — ingreso a Luján desde Jáuregui"
+      lat: -34.577828
+      lon: -59.106969
+      osm_ref: "COORDENADA VALIDADA POR RESIDENTE (mismo punto que Casey inicio)"
     destino:
-      desc: "Adolfo Alsina × Fernández (conexión con Ruta 7)"
-      lat: null
-      lon: null
-      osm_ref: "PENDIENTE"
+      desc: "Adolfo Alsina × Carlos Pellegrini (semáforo — límite del tramo medido)"
+      lat: -34.560621
+      lon: -59.109303
+      osm_ref: "COORDENADA VALIDADA POR RESIDENTE"
     semaforos_confirmados:
       - "Alsina × Dr. Muñiz"
       - "Alsina × Ituzaingo"
       - "Alsina × Bartolomé Mitre"
       - "Alsina × Carlos Pellegrini"
     nota_local: >
-      4 semáforos en el recorrido completo. Comparar friction_index con
-      Humberto I en el mismo horario para medir si es alternativa real
-      o igualmente congestionada.
+      4 semáforos en el recorrido. Comparar friction_index con Humberto I
+      en el mismo horario para evaluar si es alternativa real o igualmente
+      congestionada para los residentes de Jáuregui.
     validado_residente: true
 
 
@@ -563,15 +565,23 @@ resumen:
   validados_por_residente: 7
 
   correcciones_aplicadas_2026_04_19:
-    - "Las Heras NO termina en un puente — termina en Padre Salvaire (-34.56605, -59.12259). CONFIRMADO OSM+residente."
-    - "Almirante Brown (calle) y Puente Almirante Brown son estructuras DISTINTAS. La calle va de Constitución a 9 de Julio; el puente es un tramo separado."
-    - "Almirante Brown × 9 de Julio: -34.56074, -59.11923. Las Heras × 9 de Julio: -34.56632, -59.12163. CONFIRMADOS OSM."
-    - "Adolfo Alsina tiene 4 semáforos: Muñiz, Ituzaingo, Mitre, Pellegrini. CONFIRMADO residente."
-    - "Av. NSra. de Luján sin semáforos en días hábiles normales. La congestión del finde es solo por volumen."
-    - "Semáforo Insausti × Ex Ruta Nacional 5 (no Ruta 7): alterna paso entre María Ferrari y Ex Ruta 5 (tipo paso-uno-a-la-vez)."
+    - "Las Heras termina en Padre Salvaire (-34.56605, -59.12259). CONFIRMADO OSM+residente."
+    - "Almirante Brown (calle) y Puente Almirante Brown son estructuras DISTINTAS."
+    - "Almirante Brown × 9 de Julio: -34.56074, -59.11923. Las Heras × 9 de Julio: -34.56632, -59.12163."
+    - "Adolfo Alsina: 4 semáforos (Muñiz, Ituzaingo, Mitre, Pellegrini)."
+    - "Av. NSra. de Luján sin semáforos en días hábiles. Congestión finde = solo volumen."
+    - "Semáforo Insausti × Ex Ruta Nacional 5: paso alternado María Ferrari ↔ Ex Ruta 5."
 
-  pendientes_validacion_residente:
-    - "v_basilical: coordenada exacta frente a la Basílica"
-    - "v_fray_torres_semaforos: coordenada de Fray Torres × J.M. Pérez"
-    - "v_casey_corredor: inicio del tramo relevante desde el centro"
-    - "v_adolfo_alsina: coordenadas de inicio en Jáuregui y fin en Fernández"
+  coordenadas_validadas_por_residente_2026_04_19:
+    basilica:          [-34.563873, -59.121319]
+    fray_torres_jmperez: [-34.562266, -59.137677]
+    casey_inicio:      [-34.577828, -59.106969]
+    alsina_inicio:     [-34.577828, -59.106969]
+    alsina_pellegrini: [-34.560621, -59.109303]
+
+  estado_final:
+    total_vectores: 21
+    coordenadas_100pct_completas: true
+    validados_por_residente: 11
+    pendientes: []
+    listo_para_n8n: true
