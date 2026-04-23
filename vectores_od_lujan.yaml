@@ -48,26 +48,35 @@ vectores:
     nota_local: "Puente sin semáforos pero acceso congestionado en picos"
     validado_residente: false
 
-  - id: v_pte_gálvez
-    nombre: "Puente Gálvez (Las Heras)"
+  - id: v_pte_brown_completo
+    nombre: "Almirante Brown + Puente Almirante Brown (bypass completo)"
     tipologia: A
     descripcion: >
-      Extremo oeste de la calle Las Heras al cruzar el Río Luján.
-      Confirmar nombre local del puente con el residente.
+      El bypass sin semáforos más importante de la ciudad, compuesto por DOS tramos:
+      1. Calle Almirante Brown (Constitución → 9 de Julio): sin semáforos
+      2. Puente Almirante Brown (9 de Julio → lado norte del río): puente propiamente dicho
+      El residente confirmó que son entidades distintas en OSM y en la realidad.
     origen:
-      desc: "Las Heras, lado este — intersección con Italia (único semáforo del tramo)"
-      lat: -34.56748
-      lon: -59.11757
-      osm_ref: "Italia × Las Heras — semáforo confirmado OSM"
+      desc: "Almirante Brown × Constitución (inicio del bypass, acceso desde rotonda Ruta 7)"
+      lat: -34.56912
+      lon: -59.09471
+      osm_ref: "Almirante Brown (residential) — extremo este (confirmado OSM)"
+    waypoint_1:
+      desc: "Almirante Brown × 9 de Julio (fin de la calle, inicio del puente)"
+      lat: -34.56074
+      lon: -59.11923
+      osm_ref: "9 de Julio × Almirante Brown (confirmado OSM)"
     destino:
-      desc: "Las Heras, extremo oeste (cruce del río)"
-      lat: null
-      lon: null
-      osm_ref: "PENDIENTE — confirmar con residente"
+      desc: "Puente Almirante Brown — extremo norte (salida al otro lado del río)"
+      lat: -34.55946
+      lon: -59.12247
+      osm_ref: "Puente Almirante Brown start node (confirmado OSM)"
+    horario_critico: "07:30-08:30 y 17:00-19:00 días hábiles; fines de semana todo el día"
     nota_local: >
-      El semáforo de Italia y Las Heras es el único punto de fricción antes
-      del cruce. Si el puente es bidireccional, medir ambos sentidos.
-    validado_residente: false
+      Sin semáforos en todo el tramo. El friction_index base esperado es ~0.1.
+      Si supera 0.3, hay congestión en el acceso al puente (cola en 9 de Julio).
+      Este vector es el BENCHMARK de referencia: la ruta más fluida disponible.
+    validado_residente: true
 
   - id: v_pte_simone
     nombre: "Pascual Simone — cruce Río + FFCC (doble barrera)"
@@ -152,25 +161,38 @@ vectores:
     nombre: "Las Heras — corredor completo (bypass preferido)"
     tipologia: C
     descripcion: >
-      El bypass más usado del centro. Desde Constitución (rotonda entrada este)
-      hasta el único semáforo en Italia. Mide la fluidez del corredor preferido.
-      NUEVO PROBLEMA: reductores de velocidad en Alvear, Lamadrid y JM Paz.
+      El bypass más usado del centro. Corre desde Constitución (extremo este)
+      hasta Padre Salvaire (extremo oeste). La calle NO tiene puente: termina
+      en la intersección con Padre Salvaire. El Puente Almirante Brown es una
+      estructura SEPARADA en otra calle (Almirante Brown).
+      ÚNICO semáforo: Italia × Las Heras (simple, corto).
+      NUEVO PROBLEMA: reductores de velocidad en Alvear, Lamadrid y J.M. Paz.
     origen:
-      desc: "Las Heras × Avenida Constitución (entrada desde el este)"
+      desc: "Las Heras × Avenida Constitución (extremo este)"
       lat: -34.57607
       lon: -59.08978
       osm_ref: "Constitución × Las Heras (confirmado OSM)"
-    destino:
-      desc: "Las Heras × Italia (semáforo — único del tramo)"
+    waypoint_semaforo:
+      desc: "Las Heras × Italia (único semáforo del tramo)"
       lat: -34.56748
       lon: -59.11757
-      osm_ref: "Italia × Las Heras (confirmado OSM — semáforo aquí)"
+      osm_ref: "Italia × Las Heras (confirmado OSM)"
+    waypoint_9julio:
+      desc: "Las Heras × 9 de Julio"
+      lat: -34.56632
+      lon: -59.12163
+      osm_ref: "9 de Julio × Las Heras (confirmado OSM)"
+    destino:
+      desc: "Las Heras × Padre Salvaire (extremo oeste — terminus de la calle)"
+      lat: -34.56605
+      lon: -59.12259
+      osm_ref: "Las Heras × Padre Salvaire (CONFIRMADO OSM + RESIDENTE)"
     horario_critico: "07:30-08:30 y 17:00-18:30 días hábiles"
     nota_local: >
-      Este vector es la línea de base para el análisis de degradación.
-      Al comparar su friction_index con el del corredor Constitución/Pellegrini
-      paralelo, se cuantifica el "efecto de evasión" documentado por el residente.
-    validado_residente: false
+      CORRECCION VALIDADA: Las Heras termina en Padre Salvaire, sin puente.
+      El vector mide el corredor completo de ~3km sin semáforos relevantes.
+      Comparar friction_index con v_constitucion_norte (mismo tramo en paralelo).
+    validado_residente: true
 
   - id: v_heras_lomadas
     nombre: "Las Heras — tramo con nuevas lomadas (Alvear–Paz)"
@@ -311,49 +333,57 @@ vectores:
       La diferencia cuantifica el "efecto de evasión" hacia Las Heras.
     validado_residente: false
 
-  - id: v_almirante_brown_bypass
-    nombre: "Almirante Brown — bypass rotonda Ruta 7/5 → Basílica"
+  - id: v_almirante_brown_calle
+    nombre: "Almirante Brown (calle) — tramo urbano sin semáforos"
     tipologia: C
     descripcion: >
-      El bypass informal sin semáforos más importante de la ciudad.
-      El conductor que entra por Ruta 7 y va a la Basílica usa esta ruta
-      en lugar de Constitución/Pellegrini. Mide la alternativa que funciona.
+      Solo el tramo de la CALLE Almirante Brown (sin el puente).
+      Va desde Constitución (este) hasta 9 de Julio (oeste).
+      El residente confirmó: sin semáforos en todo este tramo.
+      Usado como bypass interno hacia el área de la Basílica.
     origen:
-      desc: "Almirante Brown, extremo este (zona rotonda Ruta 7 / Constitución)"
-      lat: -34.57432
-      lon: -59.09098
-      osm_ref: "Zona rotonda Constitución × Mitre (proxy — confirmar con residente)"
+      desc: "Almirante Brown × Constitución (inicio del bypass desde el este)"
+      lat: -34.56912
+      lon: -59.09471
+      osm_ref: "Almirante Brown (residential) — extremo este (confirmado OSM)"
     destino:
-      desc: "Almirante Brown × Av. Nuestra Señora de Luján"
+      desc: "Almirante Brown × 9 de Julio"
+      lat: -34.56074
+      lon: -59.11923
+      osm_ref: "9 de Julio × Almirante Brown (confirmado OSM)"
+    nota_local: >
+      Sin semáforos. Benchmark de referencia de la red.
+      Si el friction_index > 0.2 en este vector, la red entera tiene problemas.
+    validado_residente: true
+
+  - id: v_basilical
+    nombre: "Av. Nuestra Señora de Luján — eje turístico"
+    tipologia: C
+    descripcion: >
+      El corredor basilical principal. DATO CLAVE CONFIRMADO POR RESIDENTE:
+      en días hábiles normales NO tiene semáforos → fluye libremente.
+      La congestión del fin de semana es puramente por VOLUMEN (turismo/peregrinos),
+      no por señalización. Esto hace al vector muy sensible como indicador de
+      presencia turística: si hay fricción en día hábil, es un evento especial.
+    origen:
+      desc: "Av. NSra. de Luján — extremo este (acceso desde Ruta 7 / zona entrada)"
       lat: -34.56055
       lon: -59.11992
-      osm_ref: "Almirante Brown × Av. NSra. de Luján (confirmado OSM)"
-    nota_local: >
-      Sin semáforos. El friction_index esperado es ~0.1-0.2 (flujo casi libre).
-      Si es mayor, algún obstáculo nuevo fue instalado.
-    validado_residente: false
-
-  - id: v_basilical_finde
-    nombre: "Av. Nuestra Señora de Luján — eje turístico (fin de semana)"
-    tipologia: C
-    descripcion: >
-      El corredor basilical principal. Máxima ocupación los fines de semana.
-      Medir específicamente sábados y domingos entre 11:00 y 18:00.
-    origen:
-      desc: "Acceso Av. NSra. de Luján desde Ruta 7 (entrada al eje basilical)"
-      lat: null
-      lon: null
-      osm_ref: "PENDIENTE — confirmar punto exacto de acceso con residente"
+      osm_ref: "Almirante Brown × Av. NSra. de Luján (referencia confirmada OSM)"
     destino:
-      desc: "Frente a la Basílica (extremo del eje turístico)"
+      desc: "Av. NSra. de Luján frente a la Basílica"
       lat: null
       lon: null
-      osm_ref: "PENDIENTE"
-    horario_critico: "sábados y domingos 11:00-18:00; sábados de octubre: desde 08:00"
+      osm_ref: "PENDIENTE — confirmar coordenada exacta"
+    muestreo_diferencial: true
+    horario_critico_finde: "sábados y domingos 11:00-18:00"
+    horario_critico_peregrinacion: "sábados de octubre desde 08:00 — marcar como outlier"
     nota_local: >
-      En días de peregrinación masiva este vector debe ser marcado como
-      'outlier_evento' — los datos no son representativos del patrón normal.
-    validado_residente: false
+      INSIGHT CRÍTICO: la ausencia de semáforos en días hábiles confirma que
+      el problema de esta arteria es puramente de capacidad en eventos de masa,
+      no de infraestructura semafórica. La intervención adecuada es gestión
+      de eventos (desvíos, horarios de corte), no más semáforos.
+    validado_residente: true
 
   - id: v_bypass_simone_completo
     nombre: "Bypass norte-sur: Ex Ruta 5 → Fray Torres (vía Simone/Pérez)"
@@ -398,22 +428,35 @@ vectores:
     validado_residente: false
 
   - id: v_exruta5_simone
-    nombre: "Ex Ruta Nacional 5 — tramo sur (semáforo Simone)"
+    nombre: "Ex Ruta Nacional 5 — tramo sur (semáforo Insausti + semáforo Simone)"
     tipologia: C
     descripcion: >
-      Tramo de la Ex Ruta 5 en el sector del semáforo de Pascual Simone.
-      Confirmar si hay un segundo semáforo en Insausti (mano única al norte).
+      Tramo de la Ex Ruta Nacional 5 con dos semáforos problemáticos confirmados:
+      1. SEMÁFORO INSAUSTI × Ex Ruta Nacional 5 (ACLARACIÓN DEL RESIDENTE):
+         No es "mano única al norte". Es un semáforo que alterna el paso entre:
+         a) Los que vienen de la calle María Ferrari (del otro lado de la Ex Ruta 5)
+            hacia Insausti (cruce transversal)
+         b) Los que circulan por la Ex Ruta Nacional 5 en sentido normal
+         Funciona de tipo "paso uno a la vez" — genera esperas discontinuas.
+      2. SEMÁFORO PASCUAL SIMONE × Ex Ruta 5: muy lento, confirmado anteriormente.
     origen:
-      desc: "Ex Ruta 5, unos 500m al norte del semáforo de Simone"
+      desc: "Ex Ruta Nacional 5, norte del semáforo Insausti"
       lat: -34.58200
       lon: -59.11432
-      osm_ref: "Proxy — ajustar"
+      osm_ref: "Proxy — ajustar con recorrido GPS"
     destino:
-      desc: "Ex Ruta 5 × Pascual Simone"
+      desc: "Ex Ruta Nacional 5 × Pascual Simone (semáforo muy lento)"
       lat: -34.58739
       lon: -59.11432
       osm_ref: "Ex Ruta Nacional 5 × Intendente Pascual Simone (confirmado OSM)"
-    validado_residente: false
+    semaforos_confirmados:
+      - nombre: "Insausti × Ex Ruta Nacional 5"
+        tipo: "paso_alternado — María Ferrari / Ex Ruta 5"
+        nota: "alterna dos flujos transversales; no es mano única"
+      - nombre: "Pascual Simone × Ex Ruta Nacional 5"
+        tipo: "semáforo convencional"
+        nota: "identificado como uno de los más lentos de la red"
+    validado_residente: true
 
   - id: v_casey_corredor
     nombre: "Av. Lorenzo Casey — acceso a estación y barrio sur"
@@ -481,19 +524,32 @@ vectores:
     tipologia: C
     descripcion: >
       Arteria vital para residentes de Jáuregui y Pueblo Nuevo.
-      Corre paralela a Humberto I. Desemboca en calle Fernández (→ Ruta 7).
+      Corre paralela a Humberto I. Desemboca en Fernández (→ Ruta 7).
+      SEMÁFOROS CONFIRMADOS POR RESIDENTE:
+        - Alsina × Dr. Muñiz
+        - Alsina × Ituzaingo
+        - Alsina × Bartolomé Mitre
+        - Alsina × Carlos Pellegrini
     origen:
       desc: "Adolfo Alsina en el límite de Jáuregui / ingreso a Luján"
       lat: null
       lon: null
-      osm_ref: "PENDIENTE — confirmar con residente"
+      osm_ref: "PENDIENTE — confirmar coordenada exacta de inicio en Jáuregui"
     destino:
       desc: "Adolfo Alsina × Fernández (conexión con Ruta 7)"
       lat: null
       lon: null
       osm_ref: "PENDIENTE"
-    nota_local: "Comparar con Humberto I en el mismo horario para medir si es alternativa real"
-    validado_residente: false
+    semaforos_confirmados:
+      - "Alsina × Dr. Muñiz"
+      - "Alsina × Ituzaingo"
+      - "Alsina × Bartolomé Mitre"
+      - "Alsina × Carlos Pellegrini"
+    nota_local: >
+      4 semáforos en el recorrido completo. Comparar friction_index con
+      Humberto I en el mismo horario para medir si es alternativa real
+      o igualmente congestionada.
+    validado_residente: true
 
 
 # ══════════════════════════════════════════════════════════════
@@ -501,21 +557,21 @@ vectores:
 # ══════════════════════════════════════════════════════════════
 
 resumen:
-  total_vectores: 20
-  coordenadas_confirmadas_osm: 14
-  coordenadas_pendientes: 6
+  total_vectores: 21
+  coordenadas_confirmadas_osm: 17
+  coordenadas_pendientes: 4
+  validados_por_residente: 7
+
+  correcciones_aplicadas_2026_04_19:
+    - "Las Heras NO termina en un puente — termina en Padre Salvaire (-34.56605, -59.12259). CONFIRMADO OSM+residente."
+    - "Almirante Brown (calle) y Puente Almirante Brown son estructuras DISTINTAS. La calle va de Constitución a 9 de Julio; el puente es un tramo separado."
+    - "Almirante Brown × 9 de Julio: -34.56074, -59.11923. Las Heras × 9 de Julio: -34.56632, -59.12163. CONFIRMADOS OSM."
+    - "Adolfo Alsina tiene 4 semáforos: Muñiz, Ituzaingo, Mitre, Pellegrini. CONFIRMADO residente."
+    - "Av. NSra. de Luján sin semáforos en días hábiles normales. La congestión del finde es solo por volumen."
+    - "Semáforo Insausti × Ex Ruta Nacional 5 (no Ruta 7): alterna paso entre María Ferrari y Ex Ruta 5 (tipo paso-uno-a-la-vez)."
 
   pendientes_validacion_residente:
-    - "v_pte_gálvez: extremo oeste de Las Heras (¿cómo se llama el puente?)"
-    - "v_basilical_finde: puntos de inicio y fin del eje turístico"
-    - "v_rotonda_domingo: límites exactos del embudo Ruta 7"
+    - "v_basilical: coordenada exacta frente a la Basílica"
     - "v_fray_torres_semaforos: coordenada de Fray Torres × J.M. Pérez"
-    - "v_casey_corredor: inicio del tramo relevante"
-    - "v_adolfo_alsina: extremos del corredor"
-
-  preguntas_para_el_residente:
-    - "¿Cómo se llama el puente al final de Las Heras? ¿Es bidireccional?"
-    - "¿El bypass Almirante Brown empieza exactamente en la rotonda de Ruta 7 × Constitución?"
-    - "¿La Av. NSra. de Luján tiene semáforos en días normales de semana?"
-    - "¿Adolfo Alsina tiene semáforos a lo largo del recorrido?"
-    - "¿El semáforo de Insausti y Ex Ruta 5 es solo en un sentido o en ambos?"
+    - "v_casey_corredor: inicio del tramo relevante desde el centro"
+    - "v_adolfo_alsina: coordenadas de inicio en Jáuregui y fin en Fernández"
